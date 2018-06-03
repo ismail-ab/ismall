@@ -3,10 +3,12 @@ import GoogleMapReact from 'google-map-react';
 import { Coords } from 'google-map-react';
 import {
   getCurrentPosition,
-  getPlaces,
+  getPlaces
+} from './helpers';
+import {
   IPlace,
   IPlaces
-} from './helpers';
+} from './types';
 import { Marker } from './components';
 
 interface IMapState {
