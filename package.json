@@ -11,21 +11,24 @@
     "test-debug": "react-scripts-ts --inspect-brk test --runInBand --env=jsdom"
   },
   "dependencies": {
+    "dotenv": "^5.0.1",
+    "google-map-react": "1.0.3",
     "react": "16.4.0",
     "react-dom": "16.4.0",
     "react-scripts-ts": "2.16.0"
   },
   "devDependencies": {
+    "@types/enzyme": "3.1.10",
     "@types/enzyme-adapter-react-16": "1.0.2",
     "@types/enzyme-to-json": "1.5.1",
-    "@types/enzyme": "3.1.10",
+    "@types/google-map-react": "0.23.4",
     "@types/jest": "23.0.0",
     "@types/node": "10.3.0",
-    "@types/react-dom": "16.0.5",
     "@types/react": "16.3.16",
+    "@types/react-dom": "16.0.5",
+    "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "enzyme-to-json": "3.3.4",
-    "enzyme": "3.3.0",
     "ts-jest": "22.4.6",
     "typescript": "2.9.1"
   },

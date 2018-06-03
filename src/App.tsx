@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { MapContainer } from './scenes';
 
 const App: React.SFC = () => (
-  <div>IsMall</div>
+  <MapContainer />
 );
 
 export default App;
