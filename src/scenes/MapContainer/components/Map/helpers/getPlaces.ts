@@ -1,5 +1,19 @@
 import { Coords } from 'google-map-react';
-import { IPlaces } from './';
+import {
+  IPlace,
+  IPlaces
+} from './';
+
+interface IGooglePlace {
+  id: string;
+  geometry: {
+    location: Coords;
+  };
+  name: string;
+  vicinity: string;
+}
+
+interface IGooglePlaces extends Array<IGooglePlace> { }
 
 interface IParams {
   location: string;
@@ -17,6 +31,21 @@ const getUrlWithParams: (url: string, params: IParams) => string = (url, params)
   return url + urlParams;
 };
 
+const mapGooglePlacesToPlaces: (googlePlaces: IGooglePlaces) => IPlaces = (googlePlaces) => googlePlaces.map(
+  (googlePlace: IGooglePlace) => {
+    const place: IPlace = {
+      id: googlePlace.id,
+      name: googlePlace.name,
+      address: googlePlace.vicinity,
+      lng: googlePlace.geometry.location.lng,
+      lat: googlePlace.geometry.location.lat,
+      isSelected: false
+    };
+
+    return place;
+  }
+);
+
 const getPlaces: (coordinates: Coords) => Promise<IPlaces> = async (coordinates) => {
   const params = {
     location: `${coordinates.lat},${coordinates.lng}`,
@@ -30,10 +59,10 @@ const getPlaces: (coordinates: Coords) => Promise<IPlaces> = async (coordinates)
   try {
     const urlWithProxy = `${process.env.REACT_APP_PROXY_URL as string}${urlWithParams}`;
     const response = await fetch(urlWithProxy);
-
     const { results } = await response.json();
+    const places = mapGooglePlacesToPlaces(results);
 
-    return results;
+    return places;
   } catch (err) {
     return err;
   }

@@ -7,17 +7,13 @@ import {
   IPlace,
   IPlaces
 } from './helpers';
+import { Marker } from './components';
 
 interface IMapState {
-  center: {
-    lat: number;
-    lng: number;
-  };
+  center: Coords;
   zoom: number;
   places: Array<object>;
 }
-
-const AnyReactComponent = (props: { text: string; lat: number; lng: number }) => <div>{props.text}</div>;
 
 class Map extends React.Component<{}, IMapState> {
   constructor(props: {}) {
@@ -29,8 +25,10 @@ class Map extends React.Component<{}, IMapState> {
         lng: 0
       },
       zoom: 11,
-      places: []
+      places: [],
     };
+
+    this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
   async componentDidMount() {
@@ -40,6 +38,19 @@ class Map extends React.Component<{}, IMapState> {
     this.setState({
       center: coordinates,
       places: places
+    });
+  }
+
+  onMarkerClick(markerPlaceId: string) {
+    const places: IPlaces = this.state.places.map((place: IPlace) => place.id !== markerPlaceId ?
+      place
+      : {
+        ...place,
+        isSelected: !place.isSelected
+      });
+
+    this.setState({
+      places
     });
   }
 
@@ -55,11 +66,10 @@ class Map extends React.Component<{}, IMapState> {
         >
           {
             places.map((place: IPlace) => (
-              <AnyReactComponent
+              <Marker
+                {...place}
                 key={place.id}
-                lat={place.geometry.location.lat}
-                lng={place.geometry.location.lng}
-                text={place.name}
+                onMarkerClick={this.onMarkerClick}
               />
             ))
           }

@@ -1,12 +1,10 @@
 import { Coords } from 'google-map-react';
 
-export interface IPlace {
+export interface IPlace extends Coords {
   id: string;
-  geometry: {
-    location: Coords;
-  };
   name: string;
-  vicinity: string;
+  address: string;
+  isSelected: boolean;
 }
 
 export interface IPlaces extends Array<IPlace> { }
